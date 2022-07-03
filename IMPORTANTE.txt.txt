@@ -1,0 +1,1 @@
+El notebook 1 no se puede ejecutar si no se tiene un usuario y password de Reddit (adaptar en base a ello, en caso necesario).
