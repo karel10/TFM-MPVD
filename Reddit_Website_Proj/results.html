@@ -45,7 +45,7 @@
 
 									<br>
 
-									<h2>¿Cuál es el mejor foro que escudriñar?</h2>
+									<h2>¿Cuál es el mejor foro en el que escudriñar?</h2>
 
 									<p>En busca de una cantidad suficiente de contenido más o menos "impopular", hemos seleccionado un foro concreto de Reddit (i.e. un subreddit) con la intención de que tuviese una masa crítica de usuarios activos suficiente, y con potencial para que ahí se viertan opiniones controvertidas. No todos los subreddits valen: algunos tienen poca actividad, en otros solo se comparten enlaces o fotos, otros (la mayoría) felizmente dan pie casi sobre todo a conversación civilizada sobre hobbies y experiencias gratas...</p>
 									<p>Bien, después de barrer la "Redditsfera" en busca de subreddits adecuados para buscar posts "controvertidos" en cantidad, se ha seleccionado finalmente el subreddit <a href = "https://www.reddit.com/r/TrueUnpopularOpinion">r/trueunpopularopinion</a>. Otros subreddits que, en base a sus estadísticas, contenido o tono se llegaron a considerar eran opciones tales como r/changemyview, r/centrist, r/conservatives, r/abortion, r/vegan, r/childfree, sin duda cada cual con sus características diferenciales.</p>
@@ -66,8 +66,66 @@
 									<span class="image main"><img src="images/Harvested_Data.JPG" alt="" />
 										<figcaption><em>Primeras líneas del dataframe que contiene los datos obtenidos mediante nuestro procedimiento combinado con pushshift+praw.</em></figcaption>
 									</span>
-									<p>Una mirada a los títulos de estos (y otros) posts nos permite ver ya algunos temas que, en función de qué foco tengan, o cómo sean tratados pueden levantar ampollas en uno u otro sentido.</p>
-									<p>Podemos ordenar el dataframe en función de la ratio de likes, y así lo hemos hecho. Hemos podido ver ahí, en el lado negativo del espectro, como el tono tendía a ser más agresivo y los mensajes a ser más simplistas y taxativos.</p>
+									<p>Leemos la información de los diversos ficheros obtenidos, consolidándola en un único dataframe con el que trabajaremos para explorar los datos. Una mirada a los títulos de estos (y otros) posts nos permite ver ya algunos temas que, en función de qué foco tengan, o cómo sean tratados pueden levantar ampollas en uno u otro sentido.  Echamos también un vistazo a los estadísticos de los valores "score", "upvote_ratio" y "num_comments":</p>
+
+									<table style="width:100%">
+										<tr>
+											<th>Estadístico</th>
+											<th>Puntuación</th>
+											<th>Ratio de positivos</th>
+											<th>Nº de comentarios</th>
+										</tr>
+									    <tr>
+											<th>Media</th>
+											<td>7.090909</td>    
+											<td>0.516353</td>
+											<td>38.185540</td> 
+									    </tr>
+										<tr>
+											<th>Desv. estándar</th>
+											<td>18.520539</td>    
+											<td>0.128206</td>
+											<td>58.960365</td> 
+									    </tr>
+										<tr>
+											<th>Min.</th>
+											<td>0</td>    
+											<td>0.07</td>
+											<td>5</td> 
+									    </tr>
+										<tr>
+											<th>Q1</th>
+											<td>0</td>
+											<td>0.43</td>
+											<td>11</td>
+										</tr>
+										<tr>
+											<th>Q2 (mediana)</th>
+											<td>1</td>
+											<td>0.53</td>
+											<td>20</td>
+										</tr>
+										<tr>
+											<th>Q3</th>
+											<td>7</td>
+									    <td>0.62</td>
+										<td>43</td>
+									</tr>
+									<tr>
+										<th>Max.</th>
+										<td>265</td>
+										<td>0.7</td>
+										<td>797</td>
+									</tr>
+									<caption style = "font-size:18px"><strong>Primeros estadísticos de los datos numéricos de nuestro dataframe:</strong></caption>
+									</table>
+									<p>En estos datos podemos ver algunos valores que simplemente reflejan las condiciones de selección que elegimos. Pero también podemos ver algunas cosas más. Por ejemplo, vemos que hay una variabilidad muy grande en el nº de comentarios que reciben los posts de reddit, variabilidad aún mayor en el caso de la puntuación global "score".</p>
+									<p>También vemos que hay algunos posts muy negativamente valorados, con una ratio de 0.07 votos positivos (1 de cada 14): son posts que acaban metafóricamente "abucheados", incluso "linchados" a base de votos negativos. Pero observando dónde se halla el primer cuartil de la ratio de votos positivos, posts así no son la norma: el primer cuartil ya se sitúa cerca de un "fifty-fity" de votos positivos vs. negativos... Es decir, un buen número, digamos que más de las terceras partes, serán comentarios más o menos "normales", que al menos no hacen gala de una desubicación absoluta. ¿Habrá personas que escriban un post y luego se pregunten por qué recibieron tremendo correctivo en forma de <a style="color:gray", href="https://www.youtube.com/watch?v=4a-jPcPgzhU&t=34s">abucheo</a> virtual?</p>
+									<span class="image main"><img src="images/tomatizado.jpg" alt="" />
+										<figcaption><em>El tomate (aquí realmente en La Tomatina de Buñol) puede ser en ocasiones, a su vez, otra expresión análoga a lo que querría expresar el abucheo...</em></figcaption></span>
+									<p>En lo que respecta al número de comentarios recibidos, las tres cuartas partes de los posts reciben un número de comentarios del orden de las decenas o menos. Solo un puñado alcanzan los centenares de respuestas y contrarrespuestas: aquellos que se viralizaron más. ¿Es apropiado el concepto de viralización en una red social como Reddit? Supongo que sí, siempre es posible compartir algo a través de Twitter u otros medios. Lo mismo pasa de forma más marcada con la puntuación global (el "score"): solo unos pocos posts parecen recibir puntuaciones realmente elevadas: decenas y centenares de "likes", mientras que muchos otros pasan sin mucha pena ni gloria.</p>
+
+									<p>¿Qué caracteriza a algunos de esos posts que fueron virtualmente "abucheados"? Podemos ordenar el dataframe en función de la ratio de likes, y así lo hemos hecho. Hemos podido ver ahí, en el lado negativo del espectro, como el tono tendía a ser más agresivo y los mensajes a ser más simplistas y taxativos.</p>
 									<span class="image main"><img src="images/posts_impopulares.JPG" alt="" />
 										<figcaption><em>Los posts peor valorados tienden a usar un lenguaje agresivo, a menudo con formulaciones taxativas y simplistas.</em></figcaption>
 									</span>
@@ -96,10 +154,10 @@
 
 									<hr class="major" />
 									<h2>Algunas conclusiones en base a ello?</h2>
-									<p>De lo que hemos visto tal vez podemos confirmar algunas preconcepciones, quizá añadir algún matiz nuevo. Por un lado, parece que los comentarios que, de una u otra forma, expresan negatividad tendrían tendencia a no ser bien recibidos. Ya sea porque vierte una opinión negativa o la expresa de forma demasiado agresiva, parece que eso “tira para atrás”. Ya sea por el algoritmo de Reddit o por sabiduría social, parece que los comentarios con las más nefastas valoraciones son también aquellos que menos conversación generan.</p>
+									<p>De lo que hemos visto tal vez podemos confirmar algunas ideas que pudiéramos tener previamente, y quizá añadir algún matiz nuevo. Por un lado, parece que los comentarios que, de una u otra forma, expresan negatividad tendrían tendencia a no ser bien recibidos. Ya sea porque vierte una opinión negativa o la expresa de forma demasiado agresiva, parece que eso “tira para atrás”. Puede que sea por el algoritmo de Reddit o por sabiduría social, parece que los comentarios con las más nefastas valoraciones son también aquellos que menos conversación generan.</p>
 									<p>¿Dichos comentarios tan tóxicos simplemente son menos visibles y rápidamente caen en el olvido? O bien, ¿la gente prefiere evitar la interacción cuando ésta promete ser negativa con encono? Conforme nos alejamos de las peores valoraciones, tiende a aumentar la conversación, como mostraba la representación tridimensional que generamos, claramente haciéndose más vivaz a partir de cierto umbral, que no parece estar alejado de esa ratio de 0.7 positivos que hemos marcado como frontera en este trabajo. Tal vez hubiese sido interesante no hacer ese corte y ver qué pasaba con el conjunto de los posts, incluidos los realmente bien valorados.</p>
-									<p>Cabe preguntarse si esto es indicativo de que la toxicidad que pueda estar asociada a las redes, si bien existente y visible, ¿podría no dejar de ser un fenómeno de márgenes? Eso sí, mucho más accesible que en la era pre-internet.</p>
-									<p><em>Se ha quedado en el tintero una cuestión que estaba en mente cuando se comenzó este trabajo: generar un mapa de interacciones, en base a un grafo que mapease los emisores de contenido y sus interacciones con otros usuarios. La idea era que cada autor/a de un post sería un nodo emisor de contenido. Ese nodo conectaría con más autores/as, en este caso en base a comentarios al post original. Se haría ese proceso para cada post, calculando el número de interacciones (respuestas y respuestas cruzadas) entre dos autores. En base a ello se podría haber calculado una serie de vértices (conexiones) entre éstos, que tendrían mayor o menos “peso” en función de la cantidad de total de interacciones que haya habido. Esto podría complicarse un poco más, añadiendo una capa, por ejemplo de análisis de sentimiento, para valorar la positividad o negatividad de esos intercambios. Queda, por ahora, como una idea a desarrollar.</em></p>
+									<p>Cabe preguntarse si esto es indicativo de que la toxicidad que pueda estar asociada a las redes, si bien existente y visible, ¿podría no dejar de ser un fenómeno en cierto modo marginal? Eso sí, mucho más accesible que en la era pre-internet.</p>
+									<p><em>En este trabajo se ha quedado en el tintero una cuestión que estaba en mente cuando se comenzó este trabajo: generar un mapa de interacciones, en base a un grafo que mapease los emisores de contenido y sus interacciones con otros usuarios. La idea era que cada autor/a de un post sería un nodo emisor de contenido. Ese nodo conectaría con más autores/as, en este caso en base a comentarios al post original. Se haría ese proceso para cada post, calculando el número de interacciones (respuestas y respuestas cruzadas) entre dos autores. En base a ello se podría haber calculado una serie de vértices (conexiones) entre éstos, que tendrían mayor o menos “peso” en función de la cantidad de total de interacciones que haya habido. Esto podría complicarse un poco más, añadiendo una capa, por ejemplo de análisis de sentimiento, para valorar la positividad o negatividad de esos intercambios. Queda, por ahora, como una idea a desarrollar.</em></p>
 
 
 								</section>
@@ -110,13 +168,6 @@
 				<!-- Sidebar -->
 					<div id="sidebar">
 						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
 
 							<!-- Menu -->
 								<nav id="menu">
@@ -131,21 +182,23 @@
 									</ul>
 								</nav>
 
+
 							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
+							<section>
+								<header class="major">
+									<h2>Info relacionada</h2>
+								</header>
+								<div class="mini-posts">
+									<article>
+										<a href="#" class="image"><img src="images/hand-pointing-out.jpg" alt="" /></a>
+										<p>Aquí vendrá un artículo que enlace a recursos sobre la polarización (pendiente).</p>
+									</article>
+								</div>
+								<ul class="actions">
+									<li><a href="#" class="button">More</a></li>
+								</ul>
+							</section>
+
 
 							<!-- Section -->
 							<section>
@@ -163,7 +216,7 @@
 
 							<!-- Footer -->
 								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+									<p class="copyright">&copy; <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Share Alike 4.0</a>. Original template design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 								</footer>
 
 						</div>
